@@ -37,7 +37,7 @@ int i;
 "/"			return(TDIV);
 "%"			return(TMOD);
 
-"="		return(TASSIGN);
+"="			return(TASSIGN);
 "+="		return(TADDASSIGN);
 "-="		return(TSUBASSIGN);
 "*="		return(TMULASSIGN);
