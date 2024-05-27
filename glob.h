@@ -9,6 +9,7 @@
 
 extern int line_num; // line number
 extern int cErrors; // number of errors
+extern int isOverst = 0; // for overflow error
 
 extern int stidx; // index of identifier in String Table
 
@@ -21,6 +22,11 @@ enum identtypes {
     VCSC, VCARR, VUCSC, VUCARR, VFLSC, VFLARR, VDSC, VDARR, VLDSC, VLDARR,
     FVOID, FSH, FINT, FL, FLL, FUS, FUI, FUL, FULL, FC, FUC, FF, FD, FLD,
     FPVOID, FPSH, FPINT, FPL, FPLL, FPUS, FPUI, FPUL, FPULL, FPC, FPUC, FPF, FPD, FPLD
+};
+
+/* todo : add parsing errors */
+enum errortypes {
+    TOOLONG, ILLIDENT, TILLCH, OVERST, 
 };
 
 void symbolTable();

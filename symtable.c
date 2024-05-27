@@ -39,8 +39,6 @@ int found; // for the previous ocurrence of a idntifier
 
 int stidx = 0; // index of identifier in String Table
 
-int isOverst = 0; // for overflow error
-
 
 // Get Type of Identifier - return the detailed type of identifier
 char* GetTypeOfIdentifier(enum identtypes it) {

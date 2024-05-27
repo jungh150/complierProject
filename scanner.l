@@ -1,6 +1,6 @@
 %{
 /* scanner.l - lexical analyzer for MiniC
- * Programmer - 김예지(2176082), 송채원(2076216), 신정화(2271035), 윤하영(2071033)
+ * Programmer - KIM-YEJI(2176082), SONG-CHAEWON(2076216), SHIN-JUNGHWA(2271035), YOON-HAYEONG(2071033)
  * date - 2024-05-31
  */
 
@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include "tn.h"
 #include "glob.h"
+
+extern yyerror(s);
+extern printError();
 
 %}
 
@@ -64,20 +67,27 @@ D		[0-9]
 "//".*		;
 
 {L}({L}|{D})*		{ 
-						if(yyleng > 12) return(TTOOLONG); 
+						if(yyleng > 12) {
+							printError(TOOLONG);
+						}
 						else {
 							/* todo:  pass identifier type too */
 							symbolTable(line_num);
-							return(TIDENT);
+							if(isOverst == 1) {
+								printError(OVERST);
+							}
+							else{
+								return(TIDENT);
+							}
 						}
 					}
 
-{D}+{L}({L}|{D})*    return(TILLIDENT);
+{D}+{L}({L}|{D})*   printError(ILLIDENT);
 
 {D}+				return(TNUMBER);
 {D}+"."{D}+			return(TRNUMBER);
 
-.					return(TILLCH);
+.					printError(ILLCH);
 %%
 
 int yywrap() {

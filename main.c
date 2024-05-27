@@ -13,9 +13,9 @@ extern void PrintHStable();
 
 void main()
 {
-	printf("start of parser\n");
+	printf("*** MiniC parsing beigns\n");
 	yyparse();
-	printf("end of parser\n");
+	printf("Parsing ends. ***\n");
 
 	PrintHStable();
   
