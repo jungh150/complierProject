@@ -3,29 +3,31 @@
 
 #include <stdio.h>
 
-// Àü¿ª º¯¼ö
-extern int line_number; // ¶óÀÎ ¹øÈ£
-extern int cErrors; // ¿À·ù ¼ö
+// ì „ì—­ ë³€ìˆ˜
+extern int line_number; // ë¼ì¸ ë²ˆí˜¸
+extern int cErrors; // ì˜¤ë¥˜ ìˆ˜
 extern int cLine;
-extern int nextid; // ½Éº¼ Å×ÀÌºí ÀÎµ¦½º
-extern int nextfree; // ½Éº¼ Å×ÀÌºí¿¡¼­ÀÇ ´ÙÀ½ ºó °ø°£
+extern int nextid; // ì‹¬ë³¼ í…Œì´ë¸” ì¸ë±ìŠ¤
+extern int nextfree; // ì‹¬ë³¼ í…Œì´ë¸”ì—ì„œì˜ ë‹¤ìŒ ë¹ˆ ê³µê°„
+extern int yyleng;
+char* yytext;
 
-// ½Éº¼ Å×ÀÌºí Å©±â Á¤ÀÇ
+// ì‹¬ë³¼ í…Œì´ë¸” í¬ê¸° ì •ì˜
 #define STsize 1000
 #define HTsize 100
 
-// ½Éº¼ Å×ÀÌºí Ç×¸ñ ±¸Á¶Ã¼ Á¤ÀÇ
+// ì‹¬ë³¼ í…Œì´ë¸” í•­ëª© êµ¬ì¡°ì²´ ì •ì˜
 typedef struct HTentry* HTpointer;
 typedef struct HTentry {
-    int index; // ½Éº¼ Å×ÀÌºí¿¡¼­ÀÇ ÀÎµ¦½º
-    HTpointer next; // ´ÙÀ½ Ç×¸ñÀ» °¡¸®Å°´Â Æ÷ÀÎÅÍ
+    int index; // ì‹¬ë³¼ í…Œì´ë¸”ì—ì„œì˜ ì¸ë±ìŠ¤
+    HTpointer next; // ë‹¤ìŒ í•­ëª©ì„ ê°€ë¦¬í‚¤ëŠ” í¬ì¸í„°
 } HTentry;
 
-// Àü¿ª ½Éº¼ Å×ÀÌºí ¹× ¹®ÀÚ¿­ Å×ÀÌºí
+// ì „ì—­ ì‹¬ë³¼ í…Œì´ë¸” ë° ë¬¸ìì—´ í…Œì´ë¸”
 extern HTpointer HT[HTsize];
 extern char ST[STsize];
 
-// ½Éº¼ Å×ÀÌºí °ü¸® ÇÔ¼ö ¼±¾ğ
+// ì‹¬ë³¼ í…Œì´ë¸” ê´€ë¦¬ í•¨ìˆ˜ ì„ ì–¸
 void ComputeHS(int nid, int nfree);
 void LookupHS(int nid, int nfree);
 void AddHT(int hscode);
