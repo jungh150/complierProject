@@ -1,10 +1,7 @@
 /*
-* reporterror.c - error에 대한 출력
-*
-* Progammer - 
-*
-* date - 05/22/2024
-*
+* reporterror.c - print error
+* Progammer - KIM-YEJI(2176082), SONG-CHAEWON(2076216), SHIN-JUNGHWA(2271035), YOON-HAYEONG(2071033)
+* date - 2024-05-31
 */
 
 #include <stdio.h>
@@ -12,49 +9,50 @@
 #include "tn.h"
 #include "glob.h"
 
-extern line(int);
-extern yylex();
+extern int yylex();
+int cErrors = 0;
 
 /*
 * yyerror() - error 함수
 */
-yyerror(s)
-char* s;
-{
-
+void yyerror(char* s) {
+    printf("%s\n", s);
 }
+
+void line() {
+    printf("\t%d\t\t\t", line_num);
+}
+
 
 void printError(ERRORtypes err)
 {
-  switch(err)
-  {
-    case 0: //wrong_st
-      line(cLine);
-      printf("< Error > => Wrong Statement!\n");
-      cErrors++;
-      break;
+    switch (err) {
+    case TOOLONG:
+        line();
+        printf("Too long identifier: The maximum length of an identifier is 12\n");
+        cErrors++;
+        break;
+    case ILLIDENT:
+        line();
+        printf("Illegal Identifier: Start with Digit\n");
+        cErrors++;
+        break;
+    case TILLCH:
+        line();
+        printf("Illegal Character\n");
+        break;
+    case OVERST:
+        line();
+        printf("Over Flow\n");
+        cErrors++;
+        break;
+    case wrong_st:
+        break;
+    case wrong_funcdef:
+        break;
+    default:
+        break;
 
-    case 1: //wrong_funcdef
-      line(cLine);
-      printf("< Error > => Wrong function definition\n");
-      break;
-
-    case 2: //nosemi
-      line(cLine);
-      printf("< Error > => Missing semicolon\n");
-      cErrors++;
-      break;
-
-    case 3: //nobrace
-      line(cLine);
-      printf("< Error > => Missing brace\n");
-      cErrors++;
-      break;
-
-    case 4: //nobracket
-      line(cLine);
-      printf("< Error > => Missing bracket\n");
-      cErrors++;
-      break;
-  }
+    /* todo: handle parsing error */
+    }
 }
