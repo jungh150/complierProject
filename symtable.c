@@ -63,7 +63,7 @@ void GetTypeOfIdentifier(int type) {
     case 7: printf("function name, return type = int"); break;
     case 8:printf("function name, return type = float"); break;
     case 9: printf("integer scalar parameter"); break;
-    default: printf("No"); break;
+    default: printf("not defined identifier/function"); break;
     }
 }
 
