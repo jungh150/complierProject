@@ -1,7 +1,10 @@
 /*
-* reporterror.c - print error
-* Progammer - KIM-YEJI(2176082), SONG-CHAEWON(2076216), SHIN-JUNGHWA(2271035), YOON-HAYEONG(2071033)
-* date - 2024-05-31
+* reporterror.c - error에 대한 출력
+*
+* Progammer - 김예지(2176082), 송채원(2076216), 신정화(2271035), 윤하영(2071033)
+*
+* date - 05/22/2024
+*
 */
 
 #include <stdio.h>
@@ -9,50 +12,75 @@
 #include "tn.h"
 #include "glob.h"
 
-extern int yylex();
-int cErrors = 0;
+//extern int line_num; // line number
+extern int cErrors; // number of errors
 
 /*
 * yyerror() - error 함수
 */
-void yyerror(char* s) {
-    printf("%s\n", s);
+void yyerror(char* s)
+{
 }
-
-void line() {
-    printf("\t%d\t\t\t", line_num);
-}
-
 
 void printError(ERRORtypes err)
 {
-    switch (err) {
-    case TOOLONG:
-        line();
-        printf("Too long identifier: The maximum length of an identifier is 12\n");
+  switch(err)
+  {
+    case 0: //wrong_dcl
+        printf("line: %d\n", line_num);
+        printf("< Error > => Wrong Declaration!\n");
         cErrors++;
         break;
-    case ILLIDENT:
-        line();
-        printf("Illegal Identifier: Start with Digit\n");
+
+    case 1: //wrong_funcdef
+        printf("line: %d\n", line_num);
+        printf("< Error > => Wrong function definition\n");
+        break;
+
+    case 2: //nosemi
+        printf("line: %d\n", line_num-1);
+        printf("< Error > => Missing semicolon\n");
         cErrors++;
         break;
-    case TILLCH:
-        line();
-        printf("Illegal Character\n");
-        break;
-    case OVERST:
-        line();
-        printf("Over Flow\n");
+
+    case 3: //nobrace
+        printf("line: %d\n", line_num);
+        printf("< Error > => Missing brace\n");
         cErrors++;
         break;
-    case wrong_st:
+
+    case 4: //nosquare
+        printf("line: %d\n", line_num);
+        printf("< Error > => Missing square\n");
+        cErrors++;
         break;
-    case wrong_funcdef:
+
+    case 5: //noparen
+        printf("line: %d\n", line_num);
+        printf("< Error > => Missing paren\n");
+        cErrors++;
+        break;
+    case 6: //illsp
+        printf("line: %d\n", line_num);
+        printf("< Error > => illegal separator\n");
+        cErrors++;
+        break;
+    case 7: //illid
+        printf("line: %d\n", line_num);
+        printf("< Error > => illegal identifier\n");
+        cErrors++;
+        break;
+    case 8: //overst
+        printf("line: %d\n", line_num);
+        printf("< Error > => over string table\n");
+        cErrors++;
+        break;
+    case 9: //toolong
+        printf("line: %d\n", line_num);
+        printf("< Error > => too long identifier\n");
+        cErrors++;
         break;
     default:
         break;
-
-    /* todo: handle parsing error */
-    }
+  }
 }

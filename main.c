@@ -1,24 +1,21 @@
-/*
- * main.c - parse the syntax, print errors, and print HT
- * programmer – KIM-YEJI(2176082), SONG-CHAEWON(2076216), SHIN-JUNGHWA(2271035), YOON-HAYEONG(2071033)
- * date – 2024-05-31
- */
-
 #include <stdio.h>
 #include "tn.h"
 #include "glob.h"
 
 extern int yyparse();
-extern void PrintHStable();
+extern void printHT();
 int line_num = 1;
+int cErrors = 0;
 
-int main()
+void main()
 {
-	printf("*** MiniC parsing beigns\n");
+	printf("start of parser\n");
 	yyparse();
-	printf("Parsing ends. ***\n");
+	printf("end of parser\n");
 
-	PrintHStable();
+    printf("\n%d errors detected", cErrors);
+
+	printHT();
   
 	printf("2071033 YOON-HAYEONG\n");
 	printf("2076216 SONG-CHAEWON\n");

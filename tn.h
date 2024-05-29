@@ -74,11 +74,14 @@
      TSEMICOLON = 290,
      TLPAREN = 291,
      TRPAREN = 292,
-     TLBRACKET = 293,
-     TRBRACKET = 294,
-     TLBRACE = 295,
-     TRBRACE = 296,
-     LOWER_THAN_ELSE = 297
+     TLBRACE = 293,
+     TRBRACE = 294,
+     TLSQUARE = 295,
+     TRSQUARE = 296,
+     TTOOLONG = 297,
+     TILLIDENT = 298,
+     TILLCH = 299,
+     TLOWERTHANELSE = 300
    };
 #endif
 /* Tokens.  */
@@ -117,11 +120,14 @@
 #define TSEMICOLON 290
 #define TLPAREN 291
 #define TRPAREN 292
-#define TLBRACKET 293
-#define TRBRACKET 294
-#define TLBRACE 295
-#define TRBRACE 296
-#define LOWER_THAN_ELSE 297
+#define TLBRACE 293
+#define TRBRACE 294
+#define TLSQUARE 295
+#define TRSQUARE 296
+#define TTOOLONG 297
+#define TILLIDENT 298
+#define TILLCH 299
+#define TLOWERTHANELSE 300
 
 
 

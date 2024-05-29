@@ -1,10 +1,14 @@
-const int max = 100;
+const int max[100];
+void func(int n1, int n2) {
+	int x = 0;
+	x = x + 1;
+}
 void main()
 {
 int i,j,k;
 int rem, prime;   // rem:remainder
 
-i=2;
+i=2
 while(i<=max) {
 	prime = 1;
 	k=i/2;
@@ -17,4 +21,5 @@ while(i<=max) {
 	if(prime==1) write(i); 
 	++i;
 }
+func(i, j);
 }

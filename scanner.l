@@ -11,6 +11,11 @@
 #include "tn.h"
 #include "glob.h"
 
+extern void ComputeHS(int nid, int nfree);
+extern void LookupHS(int nid, int nfree);
+extern void AddHT(int hscode);
+extern void PrintHT();
+extern void yyerror(char *s);
 %}
 
 %s CMT
@@ -55,23 +60,29 @@
 ")"			return(TRPAREN);
 "{"			return(TLBRACE);
 "}"			return(TRBRACE);
-
+"["			return(TLSQUARE);
+"]"			return(TRSQUARE);
 ","			return(TCOMMA);
 ";"			return(TSEMICOLON);
 
+\n      	line_num++;
+[ \t]		;
+"//".*		;
+"/*"([^*]|\*+[^*/])*\**"*"	;
+
 [A-Za-z_][A-Za-z0-9_]*		{
-								if(yyleng > 12)  ;
+								if(yyleng > 12) return(TTOOLONG);
 								else {
 									symbolTable();
 									return(TIDENT);
 								}
 							}
+
+[0-9][A-Za-z_][A-Za-z0-9_]*	return(TILLIDENT);
+
 [1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
-"/*"([^*]|\*+[^*/])*\**"*"	;
-"//".*	;      
-[ \t]   ;
-[\n]    {line_num++;}
-.	return(yytext[0]);
+
+.			return(TILLCH); //<- 이건 여기서 error 처리
 %%
 
 int yywrap() {
