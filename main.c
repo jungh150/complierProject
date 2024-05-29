@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include "tn.h"
-#include "glob.h"
 
 extern int yyparse();
 extern void PrintHStable();
@@ -18,7 +17,7 @@ void main()
 	printf("Parsing ends. ***\n");
 
 	PrintHStable();
-  
+
 	printf("2071033 YOON-HAYEONG\n");
 	printf("2076216 SONG-CHAEWON\n");
 	printf("2176082 KIM-YEJI\n");

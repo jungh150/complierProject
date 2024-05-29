@@ -71,13 +71,8 @@ D		[0-9]
 						}
 						else {
 							/* todo:  pass identifier type too */
-							symbolTable(line_num);
-							if(isOverst == 1) {
-								printError(OVERST);
-							}
-							else{
-								return(TIDENT);
-							}
+							symbolTable();
+							return(TIDENT);
 						}
 					}
 

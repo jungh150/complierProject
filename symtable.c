@@ -155,7 +155,7 @@ void ReadID() {
         }
     }
     else {
-        isOverst = 1;
+        printError(OVERST);
     }
 }
 
@@ -237,7 +237,7 @@ void symbolTable() {
         else {
             AddHT(hashcode, IOTHER);
         }
-        
+
     }
     else { // already exist
         stidx = sameid;

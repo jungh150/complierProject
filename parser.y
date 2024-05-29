@@ -11,8 +11,14 @@
 #include <malloc.h>
 #include "glob.h"
 
-extern yylex();
+extern enum errortypes err;
+extern void printError(enum errortypes err);
+
+extern int yylex();
 extern yyerror(char* s);
+
+extern int type_int = 0; // 1: type of identifier is integer
+extern int type_void = 0; // 1: type of identifier is void
 %}
 
 %token TIDENT TNUMBER TCONST TELSE TIF TINT TRETURN TVOID TWHILE

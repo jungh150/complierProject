@@ -9,7 +9,9 @@
 #include "tn.h"
 #include "glob.h"
 
-extern yylex();
+extern int yylex();
+
+extern enum errortypes err;
 
 /*
 * yyerror() - error 함수
@@ -46,7 +48,7 @@ void printError(enum errortypes err)
         cErrors++;
         break;
 
-    /* todo: handle parsing error */
+        /* todo: handle parsing error */
     case WRONGDCL:
         line();
         printf("Wrong declaration\n");
