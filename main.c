@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include "tn.h"
-#include "global.h"
+#include "glob.h"
 
 extern int yyparse();
 extern void PrintHStable();

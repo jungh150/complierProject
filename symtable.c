@@ -41,8 +41,9 @@ int stidx = 0; // index of identifier in String Table
 
 
 // Get Type of Identifier - return the detailed type of identifier
+/*
 char* GetTypeOfIdentifier(enum identtypes it) {
-    switch (tt) {
+    switch (it) {
     case VSHSC: return "short scalar variable";
     case VSHARR: return "short array variable";
     case VINTSC: return "integer scalar variable";
@@ -98,8 +99,19 @@ char* GetTypeOfIdentifier(enum identtypes it) {
     case FPD: return "function name, return type = double pointer";
     case FPLD: return "function name, return type = long double pointer";
     }
-}
+} */
 
+char* GetTypeOfIdentifier(enum identtypes it) {
+    switch (it)
+    {
+    case IINT:
+        return "integer type";
+    case IVOID:
+        return "void type";
+    case IOTHER:
+        return "other type";
+    }
+}
 
 // Print HStable - Print the hash table. Write out the hashcode and the list of identifiers
 //                 associated with each hashcode, but only for non-empty list.
@@ -193,12 +205,13 @@ void LookupHS(int nid, int hscode) {
 //          If list head HT[hashcode] is null, simply add a list element with
 //          starting index of the identifier in ST.
 //          If list head HT[hashcode] is not null, add a new identifier to the head of the chain.
-void AddHT(int hscode, int line_num) {
+void AddHT(int hscode, enum identtypes it) {
     HTpointer ptr;
 
     ptr = (HTpointer)malloc(sizeof(ptr));
     ptr->index = nextid;
-    prt->linenum = line_num;
+    ptr->linenum = line_num;
+    ptr->type = it;
     ptr->next = HT[hscode];
     HT[hscode] = ptr;
 }
@@ -206,7 +219,7 @@ void AddHT(int hscode, int line_num) {
 // symbolTable - Read the identifier from the file and directly append it into ST.
 //               Compute its hash code and look up the identifier in hash table HT[hashcode].
 //               Update stidx(index in String Table).
-void symbolTable(int line_num) {
+void symbolTable() {
     ReadID(); // read identifier 
     ST[nextfree++] = '\0';
 
@@ -215,7 +228,16 @@ void symbolTable(int line_num) {
 
     if (!found) { // not already exist
         stidx = nextid;
-        AddHT(hashcode, line_num);
+        if (type_int) {
+            AddHT(hashcode, IINT);
+        }
+        else if (type_void) {
+            AddHT(hashcode, IVOID);
+        }
+        else {
+            AddHT(hashcode, IOTHER);
+        }
+        
     }
     else { // already exist
         stidx = sameid;

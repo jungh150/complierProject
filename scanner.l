@@ -10,7 +10,6 @@
 #include "glob.h"
 
 extern yyerror(s);
-extern printError();
 
 %}
 
@@ -85,7 +84,7 @@ D		[0-9]
 {D}+{L}({L}|{D})*   printError(ILLIDENT);
 
 {D}+				return(TNUMBER);
-{D}+"."{D}+			return(TRNUMBER);
+{D}+"."{D}+			return(TNUMBER);
 
 .					printError(ILLCH);
 %%

@@ -23,7 +23,7 @@ void line() {
 }
 
 
-void printError(errortypes err)
+void printError(enum errortypes err)
 {
     switch (err) {
     case TOOLONG:
@@ -36,7 +36,7 @@ void printError(errortypes err)
         printf("Illegal Identifier: Start with Digit\n");
         cErrors++;
         break;
-    case TILLCH:
+    case ILLCH:
         line();
         printf("Illegal Character\n");
         break;
@@ -47,5 +47,35 @@ void printError(errortypes err)
         break;
 
     /* todo: handle parsing error */
+    case WRONGDCL:
+        line();
+        printf("Wrong declaration\n");
+        cErrors++;
+        break;
+    case WRONGFUNCDEF:
+        line();
+        printf("Over Flow\n");
+        cErrors++;
+        break;
+    case NOSEMI:
+        line();
+        printf("Missing Semicolon\n");
+        cErrors++;
+        break;
+    case NOBRACE:
+        line();
+        printf("Missing brace\n");
+        cErrors++;
+        break;
+    case NOSQUARE:
+        line();
+        printf("Missing square bracket\n");
+        cErrors++;
+        break;
+    case NOPAREN:
+        line();
+        printf("Missing parenthesis\n");
+        cErrors++;
+        break;
     }
 }
