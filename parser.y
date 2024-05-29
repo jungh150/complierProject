@@ -266,7 +266,12 @@ actual_param_list 	: assignment_exp
 primary_exp 		: identifier
 					{
                         if(look_id->type==0 || look_id->type==11) {
-                            look_id->type=11;
+                            if(type_void==1){
+                                look_id->type=1;
+                            } else if(type_int==1){
+                                look_id->type=2;
+                            }
+                            look_tmp=look_id;
                         }
                     }
 	     			| TNUMBER
