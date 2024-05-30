@@ -1,9 +1,8 @@
 %{
-/* scanner.l - lexical analyzer for MiniC
- * 
- * Programmer - ±è¿¹Áö(2176082), ¼ÛÃ¤¿ø(2076216), ½ÅÁ¤È­(2271035), À±ÇÏ¿µ(2071033)
- * 
- * data - 2024-05-22
+/*
+ * scanner.l - lexical analyzer for MiniC
+ * progrmmer â€“ SHIN-JUNGHWA(2271035), KIM-YEJI(2176082), SONG-CHAEWON(2076216), YOON-HAYEONG(2071033)
+ * date - 2024-05-30
  */
 
 #include <stdio.h>
@@ -11,13 +10,11 @@
 #include "tn.h"
 #include "glob.h"
 
-extern ComputeHS(int nid, int nfree);
-extern LookupHS(int nid, int nfree);
-extern AddHT(int hscode);
-extern PrintHT();
+extern printError(ERRORtypes err);
 extern yyerror(char *s);
 %}
-
+L		[A-Za-z_]
+D		[0-9]
 %s CMT
 
 %%
@@ -25,6 +22,7 @@ extern yyerror(char *s);
 "else"		return(TELSE);
 "if"		return(TIF);
 "int"		return(TINT);
+"float"		return(TFLOAT);
 "return"	return(TRETURN);
 "void"		return(TVOID);
 "while"		return(TWHILE);
@@ -70,20 +68,20 @@ extern yyerror(char *s);
 "//".*		;
 "/*"([^*]|\*+[^*/])*\**"*"	;
 
-[A-Za-z_][A-Za-z0-9_]*		{
-								if(yyleng > 12) return(TTOOLONG);
-								else {
-									symbolTable();
-									printf("IDENT\n");
-									return(TIDENT);
-								}
-							}
+{L}({L}|{D})*		{
+						if(yyleng > 12) return(TTOOLONG);
+						else {
+							symbolTable();
+							return(TIDENT);
+						}
+					}
 
-[0-9][A-Za-z_][A-Za-z0-9_]*	return(TILLIDENT);
+{D}+{L}({L}|{D})*   return(TSTARTWD);
 
-[1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
+{D}+				return(TNUMBER);
+{D}+"."{D}+			return(TRNUMBER);
 
-.			return(TILLCH); //<- ÀÌ°Ç ¿©±â¼­ error Ã³¸®
+.			return(TILLCH);
 %%
 
 int yywrap() {

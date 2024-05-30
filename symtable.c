@@ -1,7 +1,7 @@
 /*
- * symtable.c - °¢ token¿¡ ´ëÇÑ Ãâ·Â
- * programmer - ±è¿¹Áö(2176082), ¼ÛÃ¤¿ø(2076216), ½ÅÁ¤È­(2271035), À±ÇÏ¿µ(2071033)
- * date - 2024-04-29
+ * symtable.c - insert tokens into Symbol Table and Hash Table, and print Hash Table
+ * progrmmer â€“ SHIN-JUNGHWA(2271035), KIM-YEJI(2176082), SONG-CHAEWON(2076216), YOON-HAYEONG(2071033)
+ * date - 2024-05-30
  */
 
 #include <stdio.h> 
@@ -49,11 +49,11 @@ void ReadID() {
 //              of its characters and the taking the sum modulo the size of HT.
 void ComputeHS(int nid, int nfree) {
     int code, i;
-    code = 0; // identifierÀÇ ¾Æ½ºÅ°ÄÚµåÀÇ ÇÕ
+    code = 0; // sum of the ASCII codes of identifier
     for (i = nid; i < nfree - 1; i++) {
         code += (int)ST[i];
     }
-    hashcode = code % HTsize; // (¾Æ½ºÅ°ÄÚµå ÇÕ) mod (hash table Å©±â) -> hashcode
+    hashcode = code % HTsize; // (sum of ASCII codes) mod (hash table size) -> hashcode
 }
 
 // Lookup HS - For each identifier, look it up in the hash table for previous occurrence of
@@ -62,19 +62,19 @@ void ComputeHS(int nid, int nfree) {
 void LookupHS(int nid, int hscode) {
     HTentry* here;
     int i, j;
-    found = FALSE; // ÀÌ¹Ì HT¿¡ Á¸ÀçÇÏ´Â identifierÀÎ °æ¿ì TRUE, ¾Æ´Ï¸é FALSE
+    found = FALSE; // if it already exists inf HT then TRUE, else FALSE
 
-    // »õ·Î¿î identifier°¡ hash table¿¡ ÀúÀåµÉ index(À§Ä¡)°¡ ºñ¾îÀÖÁö ¾ÊÀ¸¸é
+    // if the index of HT is not empty
     if (HT[hscode] != NULL) {
         here = HT[hscode];
-        // while loop¸¦ µ¹¸é¼­ ÀÌ¹Ì Á¸ÀçÇÏ´Â identifierÀÎÁö Ã¼Å©
+        // check if the identifier already exists
         while (here != NULL && found == FALSE) {
             found = TRUE;
-            i = here->index; // HT[hscode]¿¡¼­ index ºÎºÐ¿¡ ÀûÈù °ª
-            j = nid; // identifierÀÇ ½ÃÀÛ ºÎºÐÀÇ index
+            i = here->index; 
+            j = nid; // first index of identifier
             sameid = i;
-            // identifier¿Í µ¿ÀÏÇÑÁö Ã¼Å©
-            while (ST[i] != '\0' && ST[j] != '\0' && found == TRUE) { // identifier¿Í ÇÑ±ÛÀÚ¾¿ °°ÀºÁö ºñ±³
+            // check if it is the same as identifier
+            while (ST[i] != '\0' && ST[j] != '\0' && found == TRUE) { // compare each character
                 if (ST[i] != ST[j])
                     found = FALSE;
                 else {
@@ -82,7 +82,7 @@ void LookupHS(int nid, int hscode) {
                     j++;
                 }
             }
-            here = here->next; // ¿¬°á¸®½ºÆ®¿¡¼­ ´ÙÀ½ Ä­À¸·Î ÀÌµ¿ÇÏ¸ç Ã¼Å©
+            here = here->next; // move to next of linked list
         }
     }
 }
@@ -96,6 +96,7 @@ void AddHT(int hscode) {
 
     ptr = (HTentry*)malloc(sizeof(HTentry));
     ptr->index = nextid;
+    ptr->linenum = line_num;
     ptr->tp = type;
     ptr->rtp = returntp;
     ptr->paramnum = 0;
@@ -116,7 +117,7 @@ void printHT() {
     for (i = 0; i < HTsize; i++) {
         if (HT[i] != NULL) {
             printf("  Hash Code %3d : ", i);
-            // ¿¬°á¸®½ºÆ®¿¡¼­ ´ÙÀ½ Ä­À¸·Î ³Ñ¾î°¡¸é¼­ Ãâ·Â
+            // iterate through linked list
             for (here = HT[i]; here != NULL; here = here->next) {
                 j = here->index;
                 while (ST[j] != '\0' && j < STsize) {
@@ -124,11 +125,28 @@ void printHT() {
                 }
                 if (here->tp == 0) {
                     printf(" - integer scalar variable ");
-                } else if (here->tp == 1) {
+                    printf(" (line %d)", here->linenum);
+                }
+                else if (here->tp == 1) {
                     printf(" - integer array variable ");
-                } else if (here->tp == 2) {
-                    printf(" - function\n");
-                    printf("\t\t  parameters : ");
+                    printf(" (line %d)", here->linenum);
+                }
+                else if (here->tp == 2) {
+                    printf(" - float scalar variable ");
+                    printf(" (line %d)", here->linenum);
+                }
+                else if (here->tp == 3) {
+                    printf(" - float array variable ");
+                    printf(" (line %d)", here->linenum);
+                }
+                else if (here->tp == 4) {
+                    printf(" - function ");
+                    printf(" (line %d)\n", here->linenum);
+                    printf("\t\t  return type : ");
+                    if (here->rtp == 0) printf("void / ");
+                    else if (here->rtp == 1) printf("int / ");
+                    else if (here->rtp == 2) printf("float / ");
+                    printf("parameters : ");
                     for (int x = 0; x < here->paramnum; x++) {
                         int tmp = here->param[x];
                         while (ST[tmp] != '\0' && tmp < STsize) {
@@ -137,7 +155,7 @@ void printHT() {
                         printf(" ");
                     }
                 }
-                printf("    ");
+                printf("\n\t\t  ");
             }
             printf("\n");
         }
@@ -151,17 +169,17 @@ void printHT() {
 //               Update stidx(index in String Table).
 void symbolTable() {
     int i;
-    ReadID(); // identifier ÀÐÀ½
+    ReadID(); // read identifier
     ST[nextfree++] = '\0';
 
-    ComputeHS(nextid, nextfree); // identifierÀÇ hashcode °è»ê -> hscode
-    LookupHS(nextid, hashcode); // hash table¿¡ ÀÌ¹Ì Á¸ÀçÇÏ´Â idetifierÀÎÁö Ã¼Å© -> found, sameid
+    ComputeHS(nextid, nextfree); // compute the hashcode of identifier -> hscode
+    LookupHS(nextid, hashcode); // check if it already exists in hash table -> found, sameid
 
-    if (!found) { // Ã³À½ ÀÔ·ÂµÈ identifier¶ó¸é (hash table¿¡ ÀÌ¹Ì Á¸ÀçÇÏ´Â idetifier°¡ ¾Æ´Ï¶ó¸é)
+    if (!found) { // not already exist
         stidx = nextid;
         AddHT(hashcode);
     }
-    else { // hash table¿¡ ÀÌ¹Ì Á¸ÀçÇÏ´Â idetifier¶ó¸é
+    else { // already exist
         stidx = sameid;
         nextfree = nextid;
     }
