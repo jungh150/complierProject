@@ -1,9 +1,8 @@
 %{
-/* scanner.l - lexical analyzer for MiniC
- * 
- * Programmer - ±è¿¹Áö(2176082), ¼ÛÃ¤¿ø(2076216), ½ÅÁ¤È­(2271035), À±ÇÏ¿µ(2071033)
- * 
- * data - 2024-05-22
+/*
+ * scanner.l - lexical analyzer for MiniC
+ * progrmmer â€“ SHIN-JUNGHWA(2271035), KIM-YEJI(2176082), SONG-CHAEWON(2076216), YOON-HAYEONG(2071033)
+ * date - 2024-05-30
  */
 
 #include <stdio.h>

@@ -1,11 +1,8 @@
 /*
-* reporterror.c - error에 대한 출력
-*
-* Progammer - 김예지(2176082), 송채원(2076216), 신정화(2271035), 윤하영(2071033)
-*
-* date - 05/22/2024
-*
-*/
+ * reporterror.c - print error
+ * progrmmer – SHIN-JUNGHWA(2271035), KIM-YEJI(2176082), SONG-CHAEWON(2076216), YOON-HAYEONG(2071033)
+ * date - 2024-05-30
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +13,7 @@ extern int line_num; // line number
 extern int cErrors; // number of errors
 
 /*
-* yyerror() - error 함수
+* yyerror() - error function
 */
 void yyerror(char* s)
 {

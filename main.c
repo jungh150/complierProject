@@ -1,3 +1,9 @@
+/*
+ * main.c – parse the syntax, print errors, and print Hash Table
+ * progrmmer – SHIN-JUNGHWA(2271035), KIM-YEJI(2176082), SONG-CHAEWON(2076216), YOON-HAYEONG(2071033)
+ * date - 2024-05-30
+ */
+
 #include <stdio.h>
 #include "tn.h"
 #include "glob.h"

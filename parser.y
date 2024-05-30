@@ -1,12 +1,9 @@
 %{
 /*
  * parser.y - yacc source for the MiniC
- * 
- * Programmer - 김예지(2176082), 송채원(2076216), 신정화(2271035), 윤하영(2071033)
- *
- * date - 2024/5/31
- *
-*/
+ * progrmmer – SHIN-JUNGHWA(2271035), KIM-YEJI(2176082), SONG-CHAEWON(2076216), YOON-HAYEONG(2071033)
+ * date - 2024-05-30
+ */
 
 #include <stdio.h>
 #include <stdlib.h>

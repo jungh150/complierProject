@@ -1,7 +1,7 @@
-﻿/*
+/*
  * glob.h – global variable for the project
- * progrmmer – 김예지(2176082), 송채원(2076216), 신정화(2271035), 윤하영(2071033)
- * date - 2024-04-29
+ * progrmmer – SHIN-JUNGHWA(2271035), KIM-YEJI(2176082), SONG-CHAEWON(2076216), YOON-HAYEONG(2071033)
+ * date - 2024-05-30
  */
 
 #ifndef GLOB_H
